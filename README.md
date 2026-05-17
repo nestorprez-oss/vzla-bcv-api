@@ -1,4 +1,4 @@
-# 🇻🇪 VZLA BCV API
+# VZLA BCV API
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://python.org)
@@ -329,7 +329,7 @@ resp = _SESSION.get(url, timeout=timeout, verify=False)
 
 ## 📄 Licencia
 
-MIT License - Libre para usar, modificar y distribuir. Ver [LICENSE](LICENSE).
+MIT © 2026 Nestor Perez https://vzla.studio
 
 ---
 
