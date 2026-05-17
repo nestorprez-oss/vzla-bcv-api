@@ -12,9 +12,6 @@ services:
       - REQUEST_TIMEOUT=${REQUEST_TIMEOUT:-15}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       - RATE_LIMIT=${RATE_LIMIT:-10/minute}
-      - SCRAPER_USER_AGENT=${SCRAPER_USER_AGENT:-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36}
-      - USD_SELECTORS=${USD_SELECTORS:-}
-      - EUR_SELECTORS=${EUR_SELECTORS:-}
     env_file:
       - .env
     restart: unless-stopped

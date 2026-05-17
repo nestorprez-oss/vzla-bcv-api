@@ -37,7 +37,7 @@ API REST no oficial para consultar las **tasas de cambio oficiales** (USD/EUR) p
 | 🔒 **Logging estructurado** | Formato JSON para fácil integración con herramientas de monitoreo |
 | 🐳 **Docker listo** | `Dockerfile` + `docker-compose.yml` para producción |
 | 🔧 **Bridge ASGI→WSGI** | `passenger_wsgi.py` para compatibilidad con cPanel |
-| 🛡️ **Múltiples estrategias de scraping** | Selectores CSS, fallbacks y regex para resistir cambios del BCV |
+| 🛡️ **Web scraping directo** | Extracción vía `.strong-tb` del DOM real del BCV, probado en producción |
 
 ---
 
@@ -47,10 +47,10 @@ API REST no oficial para consultar las **tasas de cambio oficiales** (USD/EUR) p
 vzla-bcv-api/
 ├── app/
 │   ├── __init__.py
-│   ├── main.py              # FastAPI app + CORS + lifespan
+│   ├── main.py              # FastAPI app + lifespan
 │   ├── config.py            # Configuración desde variables de entorno
 │   ├── models.py            # Schemas Pydantic (RateResponse, RatesResponse)
-│   ├── scraper.py           # Web scraping con múltiples estrategias
+│   ├── scraper.py           # Web scraping del BCV via .strong-tb
 │   ├── cache.py             # Caché en memoria con TTL y stale data
 │   ├── routes.py            # Handlers de los endpoints
 │   ├── rate_limit.py        # Rate limiting por IP
@@ -102,7 +102,6 @@ curl http://localhost:8000/api/v1/rates/usd
 | Método | Endpoint | Descripción |
 |--------|----------|-------------|
 | `GET` | `/` | Metadatos de la API |
-| `GET` | `/health` | Health check |
 | `GET` | `/api/v1/rates/usd` | Tasa de cambio USD |
 | `GET` | `/api/v1/rates/eur` | Tasa de cambio EUR |
 | `GET` | `/api/v1/rates` | Todas las tasas |
@@ -156,7 +155,6 @@ CACHE_TTL_SECONDS=300
 REQUEST_TIMEOUT=15
 LOG_LEVEL=INFO
 RATE_LIMIT=10/minute
-SCRAPER_USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 ```
 
 | Variable | Default | Descripción |
@@ -166,7 +164,6 @@ SCRAPER_USER_AGENT=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36
 | `REQUEST_TIMEOUT` | `15` | Timeout para el scraping (segundos) |
 | `LOG_LEVEL` | `INFO` | Nivel de logging (`DEBUG`, `INFO`, `WARNING`, `ERROR`) |
 | `RATE_LIMIT` | `10/minute` | Límite de peticiones por IP |
-| `SCRAPER_USER_AGENT` | `Mozilla/5.0...` | User-Agent para el scraper |
 
 ---
 
@@ -346,5 +343,3 @@ MIT © 2026 Nestor Perez https://vzla.studio
 
 - Abre un [issue](https://github.com/nestorprez-oss/vzla-bcv-api/issues) en GitHub
 - Revisa la documentación interactiva en `/docs`
-
-
