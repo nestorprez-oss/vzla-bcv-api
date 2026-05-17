@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    container_name: vzla-bcv-api
+    ports:
+      - "8000:8000"
+    environment:
+      - BCV_URL=${BCV_URL:-https://www.bcv.org.ve/}
+      - CACHE_TTL_SECONDS=${CACHE_TTL_SECONDS:-300}
+      - REQUEST_TIMEOUT=${REQUEST_TIMEOUT:-15}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - RATE_LIMIT=${RATE_LIMIT:-10/minute}
+      - SCRAPER_USER_AGENT=${SCRAPER_USER_AGENT:-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36}
+      - USD_SELECTORS=${USD_SELECTORS:-}
+      - EUR_SELECTORS=${EUR_SELECTORS:-}
+    env_file:
+      - .env
+    restart: unless-stopped
